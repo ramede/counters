@@ -33,6 +33,7 @@ class WelcomeViewController: UIViewController {
         super.viewDidLoad()
         additionalSafeAreaInsets = Constants.additionalInsets
         innerView.configure(with: presenter.viewModel)
+        innerView.delegate = self
     }
 }
 
@@ -41,3 +42,12 @@ private extension WelcomeViewController {
         static let additionalInsets = UIEdgeInsets(top: 26, left: 39, bottom: 20, right: 39)
     }
 }
+
+extension WelcomeViewController: WelcomeViewDelegate {
+    func didPressContinue() {
+        let viewController = MainSceneViewController()
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
+

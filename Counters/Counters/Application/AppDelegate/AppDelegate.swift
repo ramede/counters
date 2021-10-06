@@ -15,7 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let window = UIWindow()
         let presenter = WelcomeViewPresenter()
-        window.rootViewController = WelcomeViewController(presenter: presenter)
+        let navigationController = UINavigationController()
+        let welcomeViewController = WelcomeViewController(presenter: presenter)
+        navigationController.viewControllers.append(welcomeViewController)
+        window.rootViewController = navigationController
+        
         self.window = window
         window.makeKeyAndVisible()
         return true
