@@ -45,7 +45,7 @@ private extension WelcomeViewController {
 
 extension WelcomeViewController: WelcomeViewDelegate {
     func didPressContinue() {
-        let viewController = MainSceneViewController()
+        let viewController = CountersTableViewController()
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
