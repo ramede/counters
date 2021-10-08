@@ -19,7 +19,7 @@ class CountersTableViewController: UITableViewController {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
-    
+        
     var dataSource: [String] = ["UM","DOIS","TRES","QUATRO"]
     
     override func viewDidLoad() {
@@ -28,6 +28,33 @@ class CountersTableViewController: UITableViewController {
         setupTableView()
         setupSearchBar()
         setupConstraints()
+        setupToolbar()
+    }
+    
+    private func setupToolbar() {
+        navigationController?.setToolbarHidden(false, animated: true)
+        
+        let spaceItem = UIBarButtonItem(
+            barButtonSystemItem: .flexibleSpace,
+            target: nil,
+            action: nil
+        )
+        
+        let statusItem = UIBarButtonItem(
+            title: "4 items · Counted 16 times",
+            style: .plain,
+            target: self,
+            action: nil
+        )
+        statusItem.isEnabled = false
+                
+        let addItem = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(addTapped)
+        )
+        
+        setToolbarItems([spaceItem, statusItem, spaceItem, addItem], animated: true)
     }
     
     private func setupNavigationBar() {
@@ -53,6 +80,11 @@ class CountersTableViewController: UITableViewController {
         coutersSearchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
         coutersSearchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8).isActive = true
     }
+    
+    @objc
+    private func addTapped() {
+        
+    }
 }
 
 extension CountersTableViewController: UISearchBarDelegate {
@@ -74,7 +106,7 @@ extension CountersTableViewController {
         guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "cell",
                 for: indexPath
-        ) as? CountersTableViewCell else { return UITableViewCell() }                
+        ) as? CountersTableViewCell else { return UITableViewCell() }
         return cell
     }
 }
