@@ -13,14 +13,14 @@ import UIKit
 
 class CountersTableViewCell: UITableViewCell {
     
-    // MARK: - Properties
+    // MARK: - Private Properties
     private var mainView = UIView()
     private var counterLabel = UILabel()
     private var dividerView = UIView()
     private var descriptionLabel = UILabel()
     private var counterStepper = UIStepper()
     
-    // MARK: - Configuration
+    // MARK: - Public Properties
     var counterDescription: String = "" {
         didSet {
             descriptionLabel.text = counterDescription

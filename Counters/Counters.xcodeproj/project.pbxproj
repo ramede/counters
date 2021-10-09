@@ -13,6 +13,9 @@
 		35868D2825E03F090028AF1D /* WelcomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35868D2725E03F090028AF1D /* WelcomeViewPresenter.swift */; };
 		35EAFB7925CC9E3B00DCFE10 /* Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 35EAFB7825CC9E3B00DCFE10 /* Networking.m */; };
 		878AA0FF270E5627006493E7 /* CountersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878AA0FE270E5627006493E7 /* CountersTableViewCell.swift */; };
+		879EC892271212060057C5F4 /* CreateConterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC891271212060057C5F4 /* CreateConterViewController.swift */; };
+		879EC894271212300057C5F4 /* CreateCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC893271212300057C5F4 /* CreateCounterView.swift */; };
+		879EC89627121E5F0057C5F4 /* UINavigationController+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC89527121E5F0057C5F4 /* UINavigationController+StatusBar.swift */; };
 		87E8A3DD270D1DC100AD5111 /* CountersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E8A3DC270D1DC100AD5111 /* CountersTableViewController.swift */; };
 		DE3EBACC25E048CE00DA1E0D /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3EBACB25E048CE00DA1E0D /* Button.swift */; };
 		DECA256C25CC8D4200851431 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECA256B25CC8D4200851431 /* AppDelegate.swift */; };
@@ -50,6 +53,9 @@
 		35EAFB7725CC9E3B00DCFE10 /* Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Networking.h; sourceTree = "<group>"; };
 		35EAFB7825CC9E3B00DCFE10 /* Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Networking.m; sourceTree = "<group>"; };
 		878AA0FE270E5627006493E7 /* CountersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersTableViewCell.swift; sourceTree = "<group>"; };
+		879EC891271212060057C5F4 /* CreateConterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateConterViewController.swift; sourceTree = "<group>"; };
+		879EC893271212300057C5F4 /* CreateCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCounterView.swift; sourceTree = "<group>"; };
+		879EC89527121E5F0057C5F4 /* UINavigationController+StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+StatusBar.swift"; sourceTree = "<group>"; };
 		87E8A3DC270D1DC100AD5111 /* CountersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersTableViewController.swift; sourceTree = "<group>"; };
 		DE3EBACB25E048CE00DA1E0D /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		DECA256825CC8D4200851431 /* Counters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Counters.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				350AF6EC25E0365A0000F698 /* UIImage+Badge.swift */,
+				879EC89527121E5F0057C5F4 /* UINavigationController+StatusBar.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -131,6 +138,15 @@
 				878AA0FE270E5627006493E7 /* CountersTableViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		879EC8902712119B0057C5F4 /* CreateCounter */ = {
+			isa = PBXGroup;
+			children = (
+				879EC891271212060057C5F4 /* CreateConterViewController.swift */,
+				879EC893271212300057C5F4 /* CreateCounterView.swift */,
+			);
+			path = CreateCounter;
 			sourceTree = "<group>";
 		};
 		87E8A3D8270D196500AD5111 /* MainScene */ = {
@@ -202,6 +218,7 @@
 		DECA25AA25CC8FD600851431 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				879EC8902712119B0057C5F4 /* CreateCounter */,
 				87E8A3D8270D196500AD5111 /* MainScene */,
 				35868D2F25E0522E0028AF1D /* Extensions */,
 				35EAFB7425CC9E0800DCFE10 /* Services */,
@@ -393,6 +410,9 @@
 				DECA257025CC8D4200851431 /* WelcomeViewController.swift in Sources */,
 				DECA256C25CC8D4200851431 /* AppDelegate.swift in Sources */,
 				DE3EBACC25E048CE00DA1E0D /* Button.swift in Sources */,
+				879EC894271212300057C5F4 /* CreateCounterView.swift in Sources */,
+				879EC892271212060057C5F4 /* CreateConterViewController.swift in Sources */,
+				879EC89627121E5F0057C5F4 /* UINavigationController+StatusBar.swift in Sources */,
 				87E8A3DD270D1DC100AD5111 /* CountersTableViewController.swift in Sources */,
 				35EAFB7925CC9E3B00DCFE10 /* Networking.m in Sources */,
 				878AA0FF270E5627006493E7 /* CountersTableViewCell.swift in Sources */,
