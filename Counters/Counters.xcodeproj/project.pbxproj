@@ -125,10 +125,18 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		87E8A3D8270D196500AD5111 /* MainScene */ = {
+		879EC88F2712021E0057C5F4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				878AA0FE270E5627006493E7 /* CountersTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		87E8A3D8270D196500AD5111 /* MainScene */ = {
+			isa = PBXGroup;
+			children = (
+				879EC88F2712021E0057C5F4 /* Views */,
 				87E8A3DC270D1DC100AD5111 /* CountersTableViewController.swift */,
 			);
 			path = MainScene;
