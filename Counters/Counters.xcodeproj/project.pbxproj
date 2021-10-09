@@ -16,6 +16,7 @@
 		879EC892271212060057C5F4 /* CreateConterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC891271212060057C5F4 /* CreateConterViewController.swift */; };
 		879EC894271212300057C5F4 /* CreateCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC893271212300057C5F4 /* CreateCounterView.swift */; };
 		879EC89627121E5F0057C5F4 /* UINavigationController+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC89527121E5F0057C5F4 /* UINavigationController+StatusBar.swift */; };
+		879EC898271226A90057C5F4 /* ItemCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC897271226A90057C5F4 /* ItemCreation.swift */; };
 		87E8A3DD270D1DC100AD5111 /* CountersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E8A3DC270D1DC100AD5111 /* CountersTableViewController.swift */; };
 		DE3EBACC25E048CE00DA1E0D /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3EBACB25E048CE00DA1E0D /* Button.swift */; };
 		DECA256C25CC8D4200851431 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECA256B25CC8D4200851431 /* AppDelegate.swift */; };
@@ -56,6 +57,7 @@
 		879EC891271212060057C5F4 /* CreateConterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateConterViewController.swift; sourceTree = "<group>"; };
 		879EC893271212300057C5F4 /* CreateCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCounterView.swift; sourceTree = "<group>"; };
 		879EC89527121E5F0057C5F4 /* UINavigationController+StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+StatusBar.swift"; sourceTree = "<group>"; };
+		879EC897271226A90057C5F4 /* ItemCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCreation.swift; sourceTree = "<group>"; };
 		87E8A3DC270D1DC100AD5111 /* CountersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersTableViewController.swift; sourceTree = "<group>"; };
 		DE3EBACB25E048CE00DA1E0D /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		DECA256825CC8D4200851431 /* Counters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Counters.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				DE3EBACB25E048CE00DA1E0D /* Button.swift */,
+				879EC897271226A90057C5F4 /* ItemCreation.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				DE3EBACC25E048CE00DA1E0D /* Button.swift in Sources */,
 				879EC894271212300057C5F4 /* CreateCounterView.swift in Sources */,
 				879EC892271212060057C5F4 /* CreateConterViewController.swift in Sources */,
+				879EC898271226A90057C5F4 /* ItemCreation.swift in Sources */,
 				879EC89627121E5F0057C5F4 /* UINavigationController+StatusBar.swift in Sources */,
 				87E8A3DD270D1DC100AD5111 /* CountersTableViewController.swift in Sources */,
 				35EAFB7925CC9E3B00DCFE10 /* Networking.m in Sources */,

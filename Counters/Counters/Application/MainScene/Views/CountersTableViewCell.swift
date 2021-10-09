@@ -48,7 +48,6 @@ class CountersTableViewCell: UITableViewCell {
 }
 
 // MARK: - Private Constants
-
 private extension CountersTableViewCell {
     enum Constants {
         enum MainView {

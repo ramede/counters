@@ -8,22 +8,55 @@
 import UIKit
 
 final class CreateCounterView: UIView {
-            
+
+    // MARK: - Private Properties
+    private var counterName = ItemCreation()
+
+    // MARK: - Public Properties
+    var isLoading: Bool = false {
+        didSet {
+            counterName.isLoading = isLoading
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupHierarchy()
-        setupConstraints()
+        setup()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
-    private func setupHierarchy() {
-        backgroundColor = .cyan
+}
+
+// MARK: - Private Constants
+private extension CreateCounterView {
+    enum Constants {
+        enum CounterName {
+            static let top: CGFloat = 25
+            static let trailing: CGFloat = -12
+            static let leading: CGFloat = 12
+        }
+    }
+}
+
+// MARK: - Private Implementation
+private extension CreateCounterView {
+    func setup() {
+        setupHierarchy()
+        setupConstraints()
+    }
+
+    func setupHierarchy() {
+        addSubview(counterName)
     }
     
-    private func setupConstraints() {
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            counterName.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Constants.CounterName.top),
+            counterName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.CounterName.trailing),
+            counterName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.CounterName.leading)
+        ])
+        
     }
-    
 }

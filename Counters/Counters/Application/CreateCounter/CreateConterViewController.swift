@@ -69,6 +69,6 @@ private extension CreateCounterViewController {
     }
     
     @objc func saveTapped() {
-        navigationController?.popViewController(animated: true)
+        contentView.isLoading = true
     }
 }
