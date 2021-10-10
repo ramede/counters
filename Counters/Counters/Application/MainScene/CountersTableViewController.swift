@@ -9,21 +9,24 @@ import UIKit
 
 class CountersTableViewController: UITableViewController {
     private var searchBarContainer = UIView()
-
+    
     // MARK: - Private Properties
-    private var countersSearchBar = UISearchBar()
+    private var searchController = UISearchController(searchResultsController: nil)
     
     // MARK: - Public Properties
-    var dataSource: [String] = []
-//    var dataSource: [String] = ["Number of times I’ve forgotten my mother’s name because I was high on Frugelés. Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés."]
+    //var dataSource: [String] = []
+    var filteredCounters: [String] = []
+    var allCounters: [String] = ["Struct common", "Apple eaten", "Cup of coffee", "Coffee" , "milk", "Coffee and Milk", "Milion"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        filteredCounters = allCounters
         setup()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
         setupToolbarAsDefaultMode()
     }
     
@@ -33,28 +36,39 @@ class CountersTableViewController: UITableViewController {
     }
 }
 
-// MARK: - SerachBar Delegate
+// MARK: - SearchBar Delegate
 extension CountersTableViewController: UISearchBarDelegate {
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(true, animated: true)
-    }
-    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
+    }
+
+}
+
+extension CountersTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchText = searchController.searchBar.text ?? ""
+                
+        if searchText.count == 0 {
+            filteredCounters = allCounters
+            tableView.reloadData()
+            return
+        }
+        
+        filteredCounters = allCounters.filter { $0.localizedCaseInsensitiveContains(searchText) }
+        tableView.reloadData()
     }
 }
 
 // MARK: - TableView Delegate
 extension CountersTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if dataSource.count == 0 {
+        if filteredCounters.count == 0 {
             return 1
         }
-        return dataSource.count
+        return filteredCounters.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if dataSource.count == 0 {
+        if filteredCounters.count == 0 {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "emptyState",
                 for: indexPath
@@ -62,15 +76,14 @@ extension CountersTableViewController {
             return cell
         }
         
-        
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: "cell",
             for: indexPath
         ) as? CountersTableViewCell else { return UITableViewCell() }
-
+        
         cell.selectedBackgroundView?.isHidden = true
         cell.tintColor = UIColor(named: "AccentColor")
-        cell.counterDescription = dataSource[indexPath.row]
+        cell.counterDescription = filteredCountersf[indexPath.row]
         return cell
     }
     
@@ -90,20 +103,23 @@ extension CountersTableViewController {
 // MARK: - Private Implementation
 private extension CountersTableViewController {
     func setup() {
-        setupCountersSearchBar()
         setupNavigationBar()
+        setupSerachController()
         setupTableView()
-        setupSearchBar()
         setupConstraints()
     }
-
-    func setupCountersSearchBar() {
-        countersSearchBar.searchBarStyle = UISearchBar.Style.minimal
-        countersSearchBar.placeholder = "Search"
-        countersSearchBar.sizeToFit()
-        countersSearchBar.isTranslucent = false
-        countersSearchBar.backgroundColor = .systemGray6
-        countersSearchBar.translatesAutoresizingMaskIntoConstraints = false
+    
+    func setupSerachController() {
+        definesPresentationContext = true
+        searchController.obscuresBackgroundDuringPresentation = true
+        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.automaticallyShowsScopeBar = false
+        searchController.searchResultsUpdater = self
+        
+        searchController.searchBar.backgroundColor = .systemGray6
+        searchController.searchBar.backgroundImage = UIImage()
+        searchController.searchBar.delegate = self
+        searchController.searchBar.barTintColor = .systemGray6
     }
     
     func setupToolbarAsDefaultMode() {
@@ -114,7 +130,7 @@ private extension CountersTableViewController {
         navigationController?.setToolbarHidden(false, animated: true)
         setToolbarItems([flexibleSpace, counterSumDisplayer, flexibleSpace, addButton], animated: true)
     }
-
+    
     func setupToolbarAsBatchDeletionMode(_ hasSeletedData: Bool = false) {
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let counterSumDisplayer = UIBarButtonItem(title: "",style: .plain,target: self,action: nil)
@@ -139,12 +155,12 @@ private extension CountersTableViewController {
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneTapped))
         doneButton.tintColor = UIColor(named: "AccentColor")
         navigationItem.leftBarButtonItem = doneButton
-
+        
         let selectAllButton = UIBarButtonItem(title: "Select All", style: .plain, target: self, action: #selector(selectAllCounter))
         selectAllButton.tintColor = UIColor(named: "AccentColor")
         navigationItem.rightBarButtonItem = selectAllButton
     }
-
+    
     func setupNavigationBarAsDefaultMode() {
         let doneButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editTapped))
         doneButton.tintColor = UIColor(named: "AccentColor")
@@ -155,7 +171,7 @@ private extension CountersTableViewController {
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.tableHeaderView = countersSearchBar
+        tableView.tableHeaderView = searchController.searchBar
         tableView.backgroundColor = .systemGray5
         tableView.keyboardDismissMode = .onDrag
         tableView.separatorStyle = .none
@@ -166,14 +182,10 @@ private extension CountersTableViewController {
         tableView.register(CountersEmptyStateTableViewCell.self, forCellReuseIdentifier: "emptyState")
     }
     
-    func setupSearchBar() {
-        countersSearchBar.delegate = self
-    }
-    
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            countersSearchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            countersSearchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            searchController.searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            searchController.searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
 }
@@ -183,7 +195,7 @@ private extension CountersTableViewController {
         let viewController = CreateCounterViewController()
         navigationController?.pushViewController(viewController, animated: true)
     }
-
+    
     @objc func deleteTapped() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -199,7 +211,7 @@ private extension CountersTableViewController {
             print("completion block")
         })
     }
-
+    
     @objc func editTapped() {
         tableView.setEditing(true, animated: true)
         setupNavigationBarAsBatchDeletionMode()
