@@ -14,7 +14,7 @@ class CountersTableViewController: UITableViewController {
     private var countersSearchBar = UISearchBar()
     
     // MARK: - Public Properties
-    var dataSource: [String] = ["Apple eaten","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Cups of coffee","Records played"]
+    var dataSource: [String] = ["Number of times I’ve forgotten my mother’s name because I was high on Frugelés. Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés."]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,10 +46,22 @@ extension CountersTableViewController: UISearchBarDelegate {
 // MARK: - TableView Delegate
 extension CountersTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if dataSource.count == 0 {
+            return 1
+        }
         return dataSource.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if dataSource.count == 0 {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "emptyState",
+                for: indexPath
+            ) as? CountersEmptyStateView else { return UITableViewCell() }
+            return cell
+        }
+        
+        
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: "cell",
             for: indexPath
@@ -60,7 +72,6 @@ extension CountersTableViewController {
         cell.counterDescription = dataSource[indexPath.row]
         return cell
     }
-    
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if !tableView.isEditing { return }
@@ -148,9 +159,10 @@ private extension CountersTableViewController {
         tableView.keyboardDismissMode = .onDrag
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 180
+        tableView.estimatedRowHeight = UIScreen.main.bounds.height * 65 / 100
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.register(CountersTableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(CountersEmptyStateView.self, forCellReuseIdentifier: "emptyState")
     }
     
     func setupSearchBar() {

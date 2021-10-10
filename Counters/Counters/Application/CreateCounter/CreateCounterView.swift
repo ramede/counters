@@ -46,7 +46,7 @@ private extension CreateCounterView {
         setupHierarchy()
         setupConstraints()
     }
-
+    
     func setupHierarchy() {
         addSubview(counterName)
     }

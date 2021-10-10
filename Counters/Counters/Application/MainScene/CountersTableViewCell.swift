@@ -7,10 +7,6 @@
 
 import UIKit
 
-
-// MARK: - Constants
-
-
 class CountersTableViewCell: UITableViewCell {
     
     // MARK: - Private Properties
@@ -127,7 +123,6 @@ private extension CountersTableViewCell {
     
     func setupDividerView() {
         dividerView.translatesAutoresizingMaskIntoConstraints = false
-        dividerView.widthAnchor.constraint(equalToConstant: Constants.DividerView.width).isActive = true
         dividerView.backgroundColor = .systemGray5
     }
     
@@ -162,6 +157,7 @@ private extension CountersTableViewCell {
             counterLabel.trailingAnchor.constraint(equalTo: dividerView.trailingAnchor, constant: Constants.CounterLabel.trailing),
             counterLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: Constants.CounterLabel.leading),
             
+            dividerView.widthAnchor.constraint(equalToConstant: Constants.DividerView.width),
             dividerView.topAnchor.constraint(equalTo: mainView.topAnchor),
             dividerView.trailingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor, constant: Constants.CounterLabel.trailing),
             dividerView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor),
