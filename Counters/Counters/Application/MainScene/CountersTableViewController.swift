@@ -52,7 +52,7 @@ extension CountersTableViewController: UISearchResultsUpdating {
             tableView.reloadData()
             return
         }
-
+        
         filteredCounters = allCounters.filter { $0.localizedCaseInsensitiveContains(searchText) }
         tableView.reloadData()
     }
