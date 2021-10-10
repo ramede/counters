@@ -1,5 +1,5 @@
 //
-//  CountersEmptyStateView.swift
+//  CountersEmptyStateTableViewCell.swift
 //  Counters
 //
 //  Created by Râmede on 10/10/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CountersEmptyStateView: UITableViewCell {
+final class CountersEmptyStateTableViewCell: UITableViewCell {
 
     // MARK: - Private Properties
     private var titleLabel = UILabel()
@@ -27,17 +27,25 @@ final class CountersEmptyStateView: UITableViewCell {
 }
 
 // MARK: - Private Constants
-private extension CountersEmptyStateView {
+private extension CountersEmptyStateTableViewCell {
     enum Constants {
-        enum MainView {
-            static let top: CGFloat = 16
-            static let trailing: CGFloat = -16
-            static let leading: CGFloat = 16
-            static let radius: CGFloat = 8
+        enum Title {
+            static let width: CGFloat = 165
+            static let bottom: CGFloat = -20
+        }
+        
+        enum Description {
+            static let width: CGFloat = UIScreen.main.bounds.width * 79 / 100
+            static let bottom: CGFloat = -20
+        }
+        
+        enum Button {
+            static let height: CGFloat = 35
+            static let width: CGFloat = 190
         }
         
         enum Space {
-            static let top: CGFloat = UIScreen.main.bounds.height * 24 / 100
+            static let top: CGFloat = UIScreen.main.bounds.height * 22 / 100
         }
     }
     
@@ -55,7 +63,7 @@ private extension CountersEmptyStateView {
 }
 
 // MARK: - Private Implementation
-private extension CountersEmptyStateView {
+private extension CountersEmptyStateTableViewCell {
     func setup() {
         backgroundColor = .clear
         setupTitleLabel()
@@ -101,24 +109,24 @@ private extension CountersEmptyStateView {
         
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.widthAnchor.constraint(equalToConstant: 165),
+            titleLabel.widthAnchor.constraint(equalToConstant: Constants.Title.width),
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Space.top),
-            titleLabel.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -20),
+            titleLabel.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: Constants.Title.bottom),
 
-            descriptionLabel.widthAnchor.constraint(equalToConstant: 304),
+            descriptionLabel.widthAnchor.constraint(equalToConstant: Constants.Description.width),
             descriptionLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            descriptionLabel.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -20),
+            descriptionLabel.bottomAnchor.constraint(equalTo: button.topAnchor, constant: Constants.Description.bottom),
 
-            button.heightAnchor.constraint(equalToConstant: 35),
-            button.widthAnchor.constraint(equalToConstant: 190),
+            button.heightAnchor.constraint(equalToConstant: Constants.Button.height),
+            button.widthAnchor.constraint(equalToConstant: Constants.Button.width),
             button.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 }
 
-private extension CountersEmptyStateView {
+private extension CountersEmptyStateTableViewCell {
     @objc func didPressButton() {
         print("## didPressButton ###########")
     }

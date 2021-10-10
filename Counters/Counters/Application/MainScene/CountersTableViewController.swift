@@ -14,7 +14,8 @@ class CountersTableViewController: UITableViewController {
     private var countersSearchBar = UISearchBar()
     
     // MARK: - Public Properties
-    var dataSource: [String] = ["Number of times I’ve forgotten my mother’s name because I was high on Frugelés. Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés."]
+    var dataSource: [String] = []
+//    var dataSource: [String] = ["Number of times I’ve forgotten my mother’s name because I was high on Frugelés. Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés.","Number of times I’ve forgotten my mother’s name because I was high on Frugelés."]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +58,7 @@ extension CountersTableViewController {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "emptyState",
                 for: indexPath
-            ) as? CountersEmptyStateView else { return UITableViewCell() }
+            ) as? CountersEmptyStateTableViewCell else { return UITableViewCell() }
             return cell
         }
         
@@ -162,7 +163,7 @@ private extension CountersTableViewController {
         tableView.estimatedRowHeight = UIScreen.main.bounds.height * 65 / 100
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.register(CountersTableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.register(CountersEmptyStateView.self, forCellReuseIdentifier: "emptyState")
+        tableView.register(CountersEmptyStateTableViewCell.self, forCellReuseIdentifier: "emptyState")
     }
     
     func setupSearchBar() {

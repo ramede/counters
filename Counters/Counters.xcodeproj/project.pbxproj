@@ -17,7 +17,7 @@
 		879EC894271212300057C5F4 /* CreateCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC893271212300057C5F4 /* CreateCounterView.swift */; };
 		879EC89627121E5F0057C5F4 /* UINavigationController+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC89527121E5F0057C5F4 /* UINavigationController+StatusBar.swift */; };
 		879EC898271226A90057C5F4 /* ItemCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC897271226A90057C5F4 /* ItemCreation.swift */; };
-		879EC89B271335040057C5F4 /* CountersEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC89A271335040057C5F4 /* CountersEmptyStateView.swift */; };
+		879EC89B271335040057C5F4 /* CountersEmptyStateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC89A271335040057C5F4 /* CountersEmptyStateTableViewCell.swift */; };
 		87E8A3DD270D1DC100AD5111 /* CountersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E8A3DC270D1DC100AD5111 /* CountersTableViewController.swift */; };
 		DE3EBACC25E048CE00DA1E0D /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3EBACB25E048CE00DA1E0D /* Button.swift */; };
 		DECA256C25CC8D4200851431 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECA256B25CC8D4200851431 /* AppDelegate.swift */; };
@@ -59,7 +59,7 @@
 		879EC893271212300057C5F4 /* CreateCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCounterView.swift; sourceTree = "<group>"; };
 		879EC89527121E5F0057C5F4 /* UINavigationController+StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+StatusBar.swift"; sourceTree = "<group>"; };
 		879EC897271226A90057C5F4 /* ItemCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCreation.swift; sourceTree = "<group>"; };
-		879EC89A271335040057C5F4 /* CountersEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersEmptyStateView.swift; sourceTree = "<group>"; };
+		879EC89A271335040057C5F4 /* CountersEmptyStateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersEmptyStateTableViewCell.swift; sourceTree = "<group>"; };
 		87E8A3DC270D1DC100AD5111 /* CountersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersTableViewController.swift; sourceTree = "<group>"; };
 		DE3EBACB25E048CE00DA1E0D /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		DECA256825CC8D4200851431 /* Counters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Counters.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,19 +145,19 @@
 			path = CreateCounter;
 			sourceTree = "<group>";
 		};
-		879EC899271334E60057C5F4 /* Views */ = {
+		879EC899271334E60057C5F4 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				879EC89A271335040057C5F4 /* CountersEmptyStateView.swift */,
+				878AA0FE270E5627006493E7 /* CountersTableViewCell.swift */,
+				879EC89A271335040057C5F4 /* CountersEmptyStateTableViewCell.swift */,
 			);
-			path = Views;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		87E8A3D8270D196500AD5111 /* MainScene */ = {
 			isa = PBXGroup;
 			children = (
-				879EC899271334E60057C5F4 /* Views */,
-				878AA0FE270E5627006493E7 /* CountersTableViewCell.swift */,
+				879EC899271334E60057C5F4 /* Cells */,
 				87E8A3DC270D1DC100AD5111 /* CountersTableViewController.swift */,
 			);
 			path = MainScene;
@@ -416,7 +416,7 @@
 				DECA257025CC8D4200851431 /* WelcomeViewController.swift in Sources */,
 				DECA256C25CC8D4200851431 /* AppDelegate.swift in Sources */,
 				DE3EBACC25E048CE00DA1E0D /* Button.swift in Sources */,
-				879EC89B271335040057C5F4 /* CountersEmptyStateView.swift in Sources */,
+				879EC89B271335040057C5F4 /* CountersEmptyStateTableViewCell.swift in Sources */,
 				879EC894271212300057C5F4 /* CreateCounterView.swift in Sources */,
 				879EC892271212060057C5F4 /* CreateConterViewController.swift in Sources */,
 				879EC898271226A90057C5F4 /* ItemCreation.swift in Sources */,
