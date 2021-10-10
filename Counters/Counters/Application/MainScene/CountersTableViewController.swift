@@ -83,7 +83,7 @@ extension CountersTableViewController {
         
         cell.selectedBackgroundView?.isHidden = true
         cell.tintColor = UIColor(named: "AccentColor")
-        cell.counterDescription = filteredCountersf[indexPath.row]
+        cell.counterDescription = filteredCounters[indexPath.row]
         return cell
     }
     
