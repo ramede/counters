@@ -12,6 +12,10 @@
 		350AF6ED25E0365A0000F698 /* UIImage+Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350AF6EC25E0365A0000F698 /* UIImage+Badge.swift */; };
 		35868D2825E03F090028AF1D /* WelcomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35868D2725E03F090028AF1D /* WelcomeViewPresenter.swift */; };
 		35EAFB7925CC9E3B00DCFE10 /* Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 35EAFB7825CC9E3B00DCFE10 /* Networking.m */; };
+		876CF30B27147DE800FA1778 /* CountersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CF30A27147DE800FA1778 /* CountersService.swift */; };
+		876CF30E2714B84B00FA1778 /* CountersEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CF30D2714B84B00FA1778 /* CountersEndPoint.swift */; };
+		876CF3102714B87C00FA1778 /* CountersTableViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CF30F2714B87C00FA1778 /* CountersTableViewInteractor.swift */; };
+		876CF3132714E31C00FA1778 /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CF3122714E31C00FA1778 /* Counter.swift */; };
 		878AA0FF270E5627006493E7 /* CountersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878AA0FE270E5627006493E7 /* CountersTableViewCell.swift */; };
 		879EC892271212060057C5F4 /* CreateConterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC891271212060057C5F4 /* CreateConterViewController.swift */; };
 		879EC894271212300057C5F4 /* CreateCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC893271212300057C5F4 /* CreateCounterView.swift */; };
@@ -54,6 +58,10 @@
 		35EAFB7625CC9E3A00DCFE10 /* Counters-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Counters-Bridging-Header.h"; sourceTree = "<group>"; };
 		35EAFB7725CC9E3B00DCFE10 /* Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Networking.h; sourceTree = "<group>"; };
 		35EAFB7825CC9E3B00DCFE10 /* Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Networking.m; sourceTree = "<group>"; };
+		876CF30A27147DE800FA1778 /* CountersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersService.swift; sourceTree = "<group>"; };
+		876CF30D2714B84B00FA1778 /* CountersEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersEndPoint.swift; sourceTree = "<group>"; };
+		876CF30F2714B87C00FA1778 /* CountersTableViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersTableViewInteractor.swift; sourceTree = "<group>"; };
+		876CF3122714E31C00FA1778 /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
 		878AA0FE270E5627006493E7 /* CountersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersTableViewCell.swift; sourceTree = "<group>"; };
 		879EC891271212060057C5F4 /* CreateConterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateConterViewController.swift; sourceTree = "<group>"; };
 		879EC893271212300057C5F4 /* CreateCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCounterView.swift; sourceTree = "<group>"; };
@@ -136,6 +144,23 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		876CF30C2714B81A00FA1778 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				876CF30A27147DE800FA1778 /* CountersService.swift */,
+				876CF30D2714B84B00FA1778 /* CountersEndPoint.swift */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		876CF3112714E2FD00FA1778 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				876CF3122714E31C00FA1778 /* Counter.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		879EC8902712119B0057C5F4 /* CreateCounter */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,8 +182,10 @@
 		87E8A3D8270D196500AD5111 /* MainScene */ = {
 			isa = PBXGroup;
 			children = (
+				876CF30C2714B81A00FA1778 /* data */,
 				879EC899271334E60057C5F4 /* Cells */,
 				87E8A3DC270D1DC100AD5111 /* CountersTableViewController.swift */,
+				876CF30F2714B87C00FA1778 /* CountersTableViewInteractor.swift */,
 			);
 			path = MainScene;
 			sourceTree = "<group>";
@@ -224,6 +251,7 @@
 		DECA25AA25CC8FD600851431 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				876CF3112714E2FD00FA1778 /* Models */,
 				879EC8902712119B0057C5F4 /* CreateCounter */,
 				87E8A3D8270D196500AD5111 /* MainScene */,
 				35868D2F25E0522E0028AF1D /* Extensions */,
@@ -415,14 +443,18 @@
 				350AF6ED25E0365A0000F698 /* UIImage+Badge.swift in Sources */,
 				DECA257025CC8D4200851431 /* WelcomeViewController.swift in Sources */,
 				DECA256C25CC8D4200851431 /* AppDelegate.swift in Sources */,
+				876CF30B27147DE800FA1778 /* CountersService.swift in Sources */,
 				DE3EBACC25E048CE00DA1E0D /* Button.swift in Sources */,
 				879EC89B271335040057C5F4 /* CountersEmptyStateTableViewCell.swift in Sources */,
 				879EC894271212300057C5F4 /* CreateCounterView.swift in Sources */,
 				879EC892271212060057C5F4 /* CreateConterViewController.swift in Sources */,
+				876CF3102714B87C00FA1778 /* CountersTableViewInteractor.swift in Sources */,
 				879EC898271226A90057C5F4 /* ItemCreation.swift in Sources */,
 				879EC89627121E5F0057C5F4 /* UINavigationController+StatusBar.swift in Sources */,
+				876CF3132714E31C00FA1778 /* Counter.swift in Sources */,
 				87E8A3DD270D1DC100AD5111 /* CountersTableViewController.swift in Sources */,
 				35EAFB7925CC9E3B00DCFE10 /* Networking.m in Sources */,
+				876CF30E2714B84B00FA1778 /* CountersEndPoint.swift in Sources */,
 				878AA0FF270E5627006493E7 /* CountersTableViewCell.swift in Sources */,
 				350AF6D925E02D5E0000F698 /* WelcomeView.swift in Sources */,
 				350AF6E425E035840000F698 /* WelcomeFeatureView.swift in Sources */,

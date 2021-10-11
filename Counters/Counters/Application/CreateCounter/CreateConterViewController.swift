@@ -26,7 +26,7 @@ class CreateCounterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        setup()        
     }
     
     override func viewWillAppear(_ animated: Bool) {

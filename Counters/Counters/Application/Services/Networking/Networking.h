@@ -19,10 +19,14 @@ typedef NS_ENUM(NSInteger, CountersErrorCode) {
 
 // MARK: - Networking
 @interface Networking : NSObject
+
 - (NSURLSessionTask *)jsonRequestURL:(NSURL *)url
                           HTTPMethod:(NSString *)method
                           parameters:(NSDictionary<NSString*, NSString*>*)parameters
                    completionHandler:(JSONCompletionHandler)completion;
+
+- (NSString *)getBaseURL;
+
 @end
 
 NS_ASSUME_NONNULL_END

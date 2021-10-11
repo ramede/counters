@@ -30,6 +30,10 @@ typedef void (^DataCompletionHandler) (NSData * _Nullable data, NSError * _Nulla
     return self;
 }
 
+- (NSString *)getBaseURL {
+    return baseURL;
+}
+
 - (NSURLSessionTask *)jsonRequestURL:(NSURL *)url
                           HTTPMethod:(NSString *)method
                           parameters:(NSDictionary<NSString*, NSString*>*)parameters
@@ -54,14 +58,39 @@ typedef void (^DataCompletionHandler) (NSData * _Nullable data, NSError * _Nulla
                       parameters:(NSDictionary<NSString*, NSString*>*)parameters
                completionHandler:(DataCompletionHandler)completion
 {
+//    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://127.0.0.1:3000/api/v1/counters"]];
+//
+//    //create the Method "GET"
+//    [urlRequest setHTTPMethod:@"GET"];
+//
+//    NSURLSession *session = [NSURLSession sharedSession];
+//
+//    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+//    {
+//      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+//      if(httpResponse.statusCode == 200)
+//      {
+//        NSError *parseError = nil;
+//        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+//        NSLog(@"The response is - %@",responseDictionary);
+//      }
+//      else
+//      {
+//        NSLog(@"Error");
+//      }
+//    }];
+//
+//    return dataTask;
+
+    NSLog(@"Value of url = %@", url);
     __auto_type *request = [[NSMutableURLRequest alloc] initWithURL:url];
     request.HTTPMethod = method;
-    
+
     NSData *JSONData = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:nil];
-    if (JSONData) {
-        request.HTTPBody = JSONData;
-        [request setValue:JSONContentType forHTTPHeaderField:ContentType];
-    }
+    //    if (JSONData) {
+    //        request.HTTPBody = JSONData;
+    //        [request setValue:JSONContentType forHTTPHeaderField:ContentType];
+    //    }
     return [self.client dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error) {
             completion(data, error);

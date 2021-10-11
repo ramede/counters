@@ -12,16 +12,27 @@ class CountersTableViewController: UITableViewController {
     
     // MARK: - Private Properties
     private var searchController = UISearchController(searchResultsController: nil)
+    private var interactor: CountersTableViewInteractable
     
     // MARK: - Public Properties
-    //var dataSource: [String] = []
     var filteredCounters: [String] = []
     var allCounters: [String] = ["Struct common", "Apple eaten", "Cup of coffee", "Coffee" , "milk", "Coffee and Milk", "Milion"]
+    
+    init(interactor: CountersTableViewInteractable) {
+      self.interactor = interactor
+      super.init(nibName: nil, bundle: .main)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         filteredCounters = allCounters
         setup()
+
+        interactor.getCounters()
     }
     
     override func viewDidAppear(_ animated: Bool) {

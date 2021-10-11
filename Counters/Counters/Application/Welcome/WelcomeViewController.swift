@@ -45,7 +45,10 @@ private extension WelcomeViewController {
 
 extension WelcomeViewController: WelcomeViewDelegate {
     func didPressContinue() {
-        let viewController = CountersTableViewController()
+        let networking = Networking.init()
+        let service = CountersApiService(networking: networking)
+        let interactor = CountersTableViewInteractor(service: service)
+        let viewController = CountersTableViewController(interactor: interactor)
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
