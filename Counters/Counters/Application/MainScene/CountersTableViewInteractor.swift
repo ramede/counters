@@ -15,16 +15,33 @@ protocol CountersTableViewInteractable: AnyObject {
 }
 
 final class CountersTableViewInteractor {
+    private let presenter: CountersTableViewPresentable
     private let service: CountersService
     
-    init(service: CountersService) {
+    init(presenter: CountersTableViewPresentable,
+         service: CountersService) {
+        self.presenter = presenter
         self.service = service
     }
 }
 
 extension CountersTableViewInteractor: CountersTableViewInteractable {
     func loadInitialInfo() {
-        
+        getCounters()
+    }
+
+    func getCounters() {
+        presenter.presentLoading(true)
+        service.retrieveAll() { result in
+            self.presenter.presentLoading(false)
+            switch result {
+            case .success(let counters):
+                self.presenter.presentCounters(with: counters)
+            case .failure(let error):
+                print("### Error ##############")
+                print(error)
+            }
+        }
     }
 
     func deleteCounters() {
@@ -37,19 +54,6 @@ extension CountersTableViewInteractor: CountersTableViewInteractable {
     
     func createCounter() {
         //TODO:
-    }
-        
-    func getCounters() {
-        service.retrieveAll() { result in
-            switch result {
-            case .success(let response):
-                print("### Response ##############")
-                print(response)
-            case .failure(let error):
-                print("### Error ##############")
-                print(error)
-            }
-        }
     }
 }
 

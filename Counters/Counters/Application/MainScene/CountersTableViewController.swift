@@ -7,17 +7,27 @@
 
 import UIKit
 
+protocol CountersTableViewDisplayable: AnyObject {
+    func displayLoad(_ isLoading: Bool)
+    func displayError()
+    func displayCounters(with counters: [Counter])
+    func displayCounterIncrement()
+    func displayCounterDecrement()
+    func dismissCounter()
+    func displayDeleteActionSheet()
+    func displaySummaryInfo()
+}
+
 class CountersTableViewController: UITableViewController {
-    private var searchBarContainer = UIView()
     
     // MARK: - Private Properties
     private var searchController = UISearchController(searchResultsController: nil)
+    private let activityIndicator = UIActivityIndicatorView()
+    private var allCounters: [Counter] = []
+    private var filteredCounters: [Counter] = []
+
     private var interactor: CountersTableViewInteractable
-    
-    // MARK: - Public Properties
-    var filteredCounters: [String] = []
-    var allCounters: [String] = ["Struct common", "Apple eaten", "Cup of coffee", "Coffee" , "milk", "Coffee and Milk", "Milion"]
-    
+        
     init(interactor: CountersTableViewInteractable) {
       self.interactor = interactor
       super.init(nibName: nil, bundle: .main)
@@ -29,10 +39,8 @@ class CountersTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        filteredCounters = allCounters
         setup()
-
-        interactor.getCounters()
+        interactor.loadInitialInfo()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,75 +55,12 @@ class CountersTableViewController: UITableViewController {
     }
 }
 
-// MARK: - SearchBar Delegate
-extension CountersTableViewController: UISearchBarDelegate {
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    }
-
-}
-
-extension CountersTableViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        let searchText = searchController.searchBar.text ?? ""
-                
-        if searchText.count == 0 {
-            filteredCounters = allCounters
-            tableView.reloadData()
-            return
-        }
-        
-        filteredCounters = allCounters.filter { $0.localizedCaseInsensitiveContains(searchText) }
-        tableView.reloadData()
-    }
-}
-
-// MARK: - TableView Delegate
-extension CountersTableViewController {
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if filteredCounters.count == 0 {
-            return 1
-        }
-        return filteredCounters.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if filteredCounters.count == 0 {
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: "emptyState",
-                for: indexPath
-            ) as? CountersEmptyStateTableViewCell else { return UITableViewCell() }
-            return cell
-        }
-        
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: "cell",
-            for: indexPath
-        ) as? CountersTableViewCell else { return UITableViewCell() }
-        
-        cell.selectedBackgroundView?.isHidden = true
-        cell.tintColor = UIColor(named: "AccentColor")
-        cell.counterDescription = filteredCounters[indexPath.row]
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if !tableView.isEditing { return }
-        let hasSelectedData = !tableView.visibleCells.filter({ $0.isSelected}).isEmpty
-        setupToolbarAsBatchDeletionMode(hasSelectedData)
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if !tableView.isEditing { return }
-        let hasSelectedData = !tableView.visibleCells.filter({ $0.isSelected}).isEmpty
-        setupToolbarAsBatchDeletionMode(hasSelectedData)
-    }
-}
-
 // MARK: - Private Implementation
 private extension CountersTableViewController {
     func setup() {
         setupNavigationBar()
         setupSerachController()
+        setupActivityIndicator()
         setupTableView()
         setupConstraints()
     }
@@ -131,6 +76,10 @@ private extension CountersTableViewController {
         searchController.searchBar.backgroundImage = UIImage()
         searchController.searchBar.delegate = self
         searchController.searchBar.barTintColor = .systemGray6
+    }
+    
+    func setupActivityIndicator() {
+        activityIndicator.color = UIColor(named: "AccentColor")
     }
     
     func setupToolbarAsDefaultMode() {
@@ -191,6 +140,7 @@ private extension CountersTableViewController {
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.register(CountersTableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(CountersEmptyStateTableViewCell.self, forCellReuseIdentifier: "emptyState")
+        tableView.backgroundView = activityIndicator
     }
     
     func setupConstraints() {
@@ -248,3 +198,111 @@ private extension CountersTableViewController {
     }
 }
 
+// MARK: - SearchBar Delegate
+extension CountersTableViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    }
+
+}
+
+extension CountersTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchText = searchController.searchBar.text ?? ""
+                
+        if searchText.count == 0 {
+            filteredCounters = allCounters
+            tableView.reloadData()
+            return
+        }
+        
+        //filteredCounters = allCounters.filter { $0.localizedCaseInsensitiveContains(searchText) }
+        tableView.reloadData()
+    }
+}
+
+// MARK: - TableView Delegate
+extension CountersTableViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if filteredCounters.count == 0 {
+            return 1
+        }
+        return filteredCounters.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if filteredCounters.count == 0 {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "emptyState",
+                for: indexPath
+            ) as? CountersEmptyStateTableViewCell else { return UITableViewCell() }
+            return cell
+        }
+        
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: "cell",
+            for: indexPath
+        ) as? CountersTableViewCell else { return UITableViewCell() }
+        
+        cell.selectedBackgroundView?.isHidden = true
+        cell.tintColor = UIColor(named: "AccentColor")
+        cell.counterTitle = filteredCounters[indexPath.row].title
+        cell.count = filteredCounters[indexPath.row].count
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if !tableView.isEditing { return }
+        let hasSelectedData = !tableView.visibleCells.filter({ $0.isSelected}).isEmpty
+        setupToolbarAsBatchDeletionMode(hasSelectedData)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !tableView.isEditing { return }
+        let hasSelectedData = !tableView.visibleCells.filter({ $0.isSelected}).isEmpty
+        setupToolbarAsBatchDeletionMode(hasSelectedData)
+    }
+}
+
+extension CountersTableViewController: CountersTableViewDisplayable {
+    func displayLoad(_ isLoading: Bool) {
+        DispatchQueue.main.async {
+            if isLoading {
+                self.activityIndicator.startAnimating()
+                return
+            }
+            self.activityIndicator.stopAnimating()
+        }
+    }
+    
+    func displayError() {
+        
+    }
+    
+    func displayCounters(with counters: [Counter]) {
+        allCounters = counters
+        filteredCounters = counters
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    func displayCounterIncrement() {
+        
+    }
+    
+    func displayCounterDecrement() {
+        
+    }
+    
+    func dismissCounter() {
+        
+    }
+    
+    func displayDeleteActionSheet() {
+        
+    }
+    
+    func displaySummaryInfo() {
+        
+    }
+}

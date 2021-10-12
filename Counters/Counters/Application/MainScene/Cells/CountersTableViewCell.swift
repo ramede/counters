@@ -10,16 +10,22 @@ import UIKit
 class CountersTableViewCell: UITableViewCell {
     
     // MARK: - Private Properties
-    private var mainView = UIView()
-    private var counterLabel = UILabel()
+    private var countLabel = UILabel()
+    private var countStepper = UIStepper()
     private var dividerView = UIView()
-    private var descriptionLabel = UILabel()
-    private var counterStepper = UIStepper()
+    private var mainView = UIView()
+    private var titleLabel = UILabel()
     
     // MARK: - Public Properties
-    var counterDescription: String = "" {
+    var count: Int = 0 {
         didSet {
-            descriptionLabel.text = counterDescription
+            countLabel.text = String(count)
+        }
+    }
+    
+    var counterTitle: String = "" {
+        didSet {
+            titleLabel.text = counterTitle
         }
     }
 
@@ -112,13 +118,13 @@ private extension CountersTableViewCell {
             font = UIFont(descriptor: descriptor, size: Font.Counter.size)
         }
         
-        counterLabel.widthAnchor.constraint(equalToConstant: Constants.CounterLabel.width).isActive = true
-        counterLabel.font = font
-        counterLabel.translatesAutoresizingMaskIntoConstraints = false
-        counterLabel.numberOfLines = 0
-        counterLabel.textColor = UIColor(named: "AccentColor")
-        counterLabel.text = "99" // TODO: Binding
-        counterLabel.textAlignment = .right
+        countLabel.widthAnchor.constraint(equalToConstant: Constants.CounterLabel.width).isActive = true
+        countLabel.font = font
+        countLabel.translatesAutoresizingMaskIntoConstraints = false
+        countLabel.numberOfLines = 0
+        countLabel.textColor = UIColor(named: "AccentColor")
+        countLabel.text = "99" // TODO: Binding
+        countLabel.textAlignment = .right
     }
     
     func setupDividerView() {
@@ -127,23 +133,23 @@ private extension CountersTableViewCell {
     }
     
     func setupDescriptionLabel() {
-        descriptionLabel.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: Font.Description.regular)
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.lineBreakMode = .byWordWrapping
-        descriptionLabel.textColor = UIColor(named: "DescriptionText")
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: Font.Description.regular)
+        titleLabel.numberOfLines = 0
+        titleLabel.lineBreakMode = .byWordWrapping
+        titleLabel.textColor = UIColor(named: "DescriptionText")
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setupCounterStepper() {
-        counterStepper.translatesAutoresizingMaskIntoConstraints = false
+        countStepper.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setupHierarchy() {
         contentView.addSubview(mainView)
-        mainView.addSubview(counterLabel)
+        mainView.addSubview(countLabel)
         mainView.addSubview(dividerView)
-        mainView.addSubview(descriptionLabel)
-        mainView.addSubview(counterStepper)
+        mainView.addSubview(titleLabel)
+        mainView.addSubview(countStepper)
     }
 
     func setupConstraints() {
@@ -153,21 +159,21 @@ private extension CountersTableViewCell {
             mainView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             mainView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.MainView.leading),
             
-            counterLabel.topAnchor.constraint(equalTo: mainView.topAnchor, constant: Constants.CounterLabel.top),
-            counterLabel.trailingAnchor.constraint(equalTo: dividerView.trailingAnchor, constant: Constants.CounterLabel.trailing),
-            counterLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: Constants.CounterLabel.leading),
+            countLabel.topAnchor.constraint(equalTo: mainView.topAnchor, constant: Constants.CounterLabel.top),
+            countLabel.trailingAnchor.constraint(equalTo: dividerView.trailingAnchor, constant: Constants.CounterLabel.trailing),
+            countLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: Constants.CounterLabel.leading),
             
             dividerView.widthAnchor.constraint(equalToConstant: Constants.DividerView.width),
             dividerView.topAnchor.constraint(equalTo: mainView.topAnchor),
-            dividerView.trailingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor, constant: Constants.CounterLabel.trailing),
+            dividerView.trailingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: Constants.CounterLabel.trailing),
             dividerView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor),
             
-            descriptionLabel.topAnchor.constraint(equalTo: mainView.topAnchor, constant: Constants.DescriptionLabel.top),
-            descriptionLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: Constants.DescriptionLabel.trailing),
-            descriptionLabel.bottomAnchor.constraint(equalTo: counterStepper.topAnchor, constant: Constants.DescriptionLabel.bottom),
+            titleLabel.topAnchor.constraint(equalTo: mainView.topAnchor, constant: Constants.DescriptionLabel.top),
+            titleLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: Constants.DescriptionLabel.trailing),
+            titleLabel.bottomAnchor.constraint(equalTo: countStepper.topAnchor, constant: Constants.DescriptionLabel.bottom),
             
-            counterStepper.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: Constants.CounterStepper.tailing),
-            counterStepper.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: Constants.CounterStepper.bottom)
+            countStepper.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: Constants.CounterStepper.tailing),
+            countStepper.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: Constants.CounterStepper.bottom)
         ])
     }
 }

@@ -16,6 +16,7 @@
 		876CF30E2714B84B00FA1778 /* CountersEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CF30D2714B84B00FA1778 /* CountersEndPoint.swift */; };
 		876CF3102714B87C00FA1778 /* CountersTableViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CF30F2714B87C00FA1778 /* CountersTableViewInteractor.swift */; };
 		876CF3132714E31C00FA1778 /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CF3122714E31C00FA1778 /* Counter.swift */; };
+		876CF3152715FA1500FA1778 /* CountersTableViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CF3142715FA1500FA1778 /* CountersTableViewPresenter.swift */; };
 		878AA0FF270E5627006493E7 /* CountersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878AA0FE270E5627006493E7 /* CountersTableViewCell.swift */; };
 		879EC892271212060057C5F4 /* CreateConterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC891271212060057C5F4 /* CreateConterViewController.swift */; };
 		879EC894271212300057C5F4 /* CreateCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879EC893271212300057C5F4 /* CreateCounterView.swift */; };
@@ -62,6 +63,7 @@
 		876CF30D2714B84B00FA1778 /* CountersEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersEndPoint.swift; sourceTree = "<group>"; };
 		876CF30F2714B87C00FA1778 /* CountersTableViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersTableViewInteractor.swift; sourceTree = "<group>"; };
 		876CF3122714E31C00FA1778 /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
+		876CF3142715FA1500FA1778 /* CountersTableViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersTableViewPresenter.swift; sourceTree = "<group>"; };
 		878AA0FE270E5627006493E7 /* CountersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersTableViewCell.swift; sourceTree = "<group>"; };
 		879EC891271212060057C5F4 /* CreateConterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateConterViewController.swift; sourceTree = "<group>"; };
 		879EC893271212300057C5F4 /* CreateCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCounterView.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				879EC899271334E60057C5F4 /* Cells */,
 				87E8A3DC270D1DC100AD5111 /* CountersTableViewController.swift */,
 				876CF30F2714B87C00FA1778 /* CountersTableViewInteractor.swift */,
+				876CF3142715FA1500FA1778 /* CountersTableViewPresenter.swift */,
 			);
 			path = MainScene;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				879EC894271212300057C5F4 /* CreateCounterView.swift in Sources */,
 				879EC892271212060057C5F4 /* CreateConterViewController.swift in Sources */,
 				876CF3102714B87C00FA1778 /* CountersTableViewInteractor.swift in Sources */,
+				876CF3152715FA1500FA1778 /* CountersTableViewPresenter.swift in Sources */,
 				879EC898271226A90057C5F4 /* ItemCreation.swift in Sources */,
 				879EC89627121E5F0057C5F4 /* UINavigationController+StatusBar.swift in Sources */,
 				876CF3132714E31C00FA1778 /* Counter.swift in Sources */,

@@ -47,8 +47,10 @@ extension WelcomeViewController: WelcomeViewDelegate {
     func didPressContinue() {
         let networking = Networking.init()
         let service = CountersApiService(networking: networking)
-        let interactor = CountersTableViewInteractor(service: service)
+        let presenter = CountersTableViewPresenter()
+        let interactor = CountersTableViewInteractor(presenter: presenter, service: service)
         let viewController = CountersTableViewController(interactor: interactor)
+        presenter.viewController = viewController
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
