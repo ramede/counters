@@ -141,6 +141,9 @@ private extension CountersTableViewController {
         tableView.register(CountersTableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(CountersEmptyStateTableViewCell.self, forCellReuseIdentifier: "emptyState")
         tableView.backgroundView = activityIndicator
+        
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
     }
     
     func setupConstraints() {
@@ -195,6 +198,10 @@ private extension CountersTableViewController {
             )
         }
         setupToolbarAsBatchDeletionMode(true)
+    }
+    
+    @objc private func refresh() {
+        interactor.getCounters()
     }
 }
 
@@ -283,6 +290,7 @@ extension CountersTableViewController: CountersTableViewDisplayable {
         filteredCounters = counters
         DispatchQueue.main.async {
             self.tableView.reloadData()
+            self.tableView.refreshControl?.endRefreshing()
         }
     }
     
