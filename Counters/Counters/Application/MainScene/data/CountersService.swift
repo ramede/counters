@@ -15,6 +15,16 @@ protocol CountersService {
     func retrieveAll(
         completion: @escaping (Result<[Counter], Error>) -> Void
     )
+    
+    func increment(
+        counterId: String,
+        completion: @escaping (Result<[Counter], Error>) -> Void
+    )
+    
+    func decrement(
+        counterId: String,
+        completion: @escaping (Result<[Counter], Error>) -> Void
+    )
 }
 
 final class CountersApiService {
@@ -26,11 +36,6 @@ final class CountersApiService {
 }
 
 extension CountersApiService: CountersService {
-    func from(data: Data) -> Counter? {
-        let decoder = JSONDecoder()
-        return try? decoder.decode(Counter.self, from: data)
-    }
-    
     func retrieveAll(
         completion: @escaping (Result<[Counter], Error>) -> Void
     ) {
@@ -39,7 +44,49 @@ extension CountersApiService: CountersService {
             self.networking.jsonRequest(
                 endpoint.url!,
                 httpMethod: endpoint.method,
-                parameters: [:],
+                parameters: endpoint.parameters,
+                completionHandler: {data, error in
+                    if let result = data as? [[String: Any]] {
+                        let counters = result.map({ el in Counter(dict: el) })
+                        completion(.success(counters))
+                        return
+                    }
+                    completion(.failure(CountersError.parsing))
+            }).resume()
+        }
+    }
+    
+    func increment(
+        counterId: String,
+        completion: @escaping (Result<[Counter], Error>) -> Void
+    ) {
+        DispatchQueue.global().async {
+            let endpoint = CountersEndPoint.increment(self.networking.getBaseURL(), counterId)
+            self.networking.jsonRequest(
+                endpoint.url!,
+                httpMethod: endpoint.method,
+                parameters: endpoint.parameters,
+                completionHandler: {data, error in
+                    if let result = data as? [[String: Any]] {
+                        let counters = result.map({ el in Counter(dict: el) })
+                        completion(.success(counters))
+                        return
+                    }
+                    completion(.failure(CountersError.parsing))
+            }).resume()
+        }
+    }
+
+    func decrement(
+        counterId: String,
+        completion: @escaping (Result<[Counter], Error>) -> Void
+    ) {
+        DispatchQueue.global().async {
+            let endpoint = CountersEndPoint.decrement(self.networking.getBaseURL(), counterId)
+            self.networking.jsonRequest(
+                endpoint.url!,
+                httpMethod: endpoint.method,
+                parameters: endpoint.parameters,
                 completionHandler: {data, error in
                     if let result = data as? [[String: Any]] {
                         let counters = result.map({ el in Counter(dict: el) })

@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol CountersTableViewCellDelegate: AnyObject {
+    func didIncrementTapped(cell: CountersTableViewCell, countId: String?)
+    func didDecrementTapped(cell: CountersTableViewCell, countId: String?)
+}
+
 class CountersTableViewCell: UITableViewCell {
     
     // MARK: - Private Properties
@@ -17,9 +22,12 @@ class CountersTableViewCell: UITableViewCell {
     private var titleLabel = UILabel()
     
     // MARK: - Public Properties
+    var countId: String?
+    
     var count: Int = 0 {
         didSet {
             countLabel.text = String(count)
+            countStepper.value = Double(count)
         }
     }
     
@@ -28,6 +36,8 @@ class CountersTableViewCell: UITableViewCell {
             titleLabel.text = counterTitle
         }
     }
+    
+    weak var delegate: CountersTableViewCellDelegate?
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -142,6 +152,7 @@ private extension CountersTableViewCell {
     
     func setupCounterStepper() {
         countStepper.translatesAutoresizingMaskIntoConstraints = false
+        countStepper.addTarget(self, action: #selector(stepperValueChanged(_:)), for: .valueChanged)
     }
     
     func setupHierarchy() {
@@ -175,5 +186,17 @@ private extension CountersTableViewCell {
             countStepper.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: Constants.CounterStepper.tailing),
             countStepper.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: Constants.CounterStepper.bottom)
         ])
+    }
+}
+
+private extension CountersTableViewCell {
+    @objc func stepperValueChanged(_ stepper: UIStepper) {
+        if Int(stepper.value) < count  {
+            delegate?.didDecrementTapped(cell: self, countId: countId)
+            count = Int(stepper.value)
+            return
+        }
+        delegate?.didIncrementTapped(cell: self, countId: countId)
+        count = Int(stepper.value)
     }
 }

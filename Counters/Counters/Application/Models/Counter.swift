@@ -15,6 +15,6 @@ extension Counter {
     init(dict : [String: Any]) {
         title = dict["title"] as? String ?? ""
         id = dict["id"] as? String ?? ""
-        count = dict["cound"] as? Int ?? 0
+        count = dict["count"] as? Int ?? 0
     }
 }

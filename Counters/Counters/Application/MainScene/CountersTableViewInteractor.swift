@@ -12,6 +12,8 @@ protocol CountersTableViewInteractable: AnyObject {
     func getCounters()
     func deleteCounters()
     func filterCounters()
+    func countIncrement(countId: String?, indexPath: IndexPath)
+    func countDecrement(countId: String?, indexPath: IndexPath)
 }
 
 final class CountersTableViewInteractor {
@@ -54,6 +56,44 @@ extension CountersTableViewInteractor: CountersTableViewInteractable {
     
     func createCounter() {
         //TODO:
+    }
+    
+    func countIncrement(countId: String?, indexPath: IndexPath) {
+        guard let countId = countId else { return }
+        presenter.presentLoading(true)
+        service.increment(counterId: countId) { result in
+            self.presenter.presentLoading(false)
+            switch result {
+            case .success(let counters):
+                guard let counter = counters.filter({ $0.id == countId}).first else {
+                    print("### Error ##############")
+                    return
+                }
+                self.presenter.presentCount(indexPath: indexPath, count: counter.count)
+            case .failure(let error):
+                print("### Error ##############")
+                print(error)
+            }
+        }
+    }
+    
+    func countDecrement(countId: String?, indexPath: IndexPath) {
+        guard let countId = countId else { return }
+        presenter.presentLoading(true)
+        service.decrement(counterId: countId) { result in
+            self.presenter.presentLoading(false)
+            switch result {
+            case .success(let counters):
+                guard let counter = counters.filter({ $0.id == countId}).first else {
+                    print("### Error ##############")
+                    return
+                }
+                self.presenter.presentCount(indexPath: indexPath, count: counter.count)
+            case .failure(let error):
+                print("### Error ##############")
+                print(error)
+            }
+        }
     }
 }
 

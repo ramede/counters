@@ -36,7 +36,7 @@ typedef void (^DataCompletionHandler) (NSData * _Nullable data, NSError * _Nulla
 
 - (NSURLSessionTask *)jsonRequestURL:(NSURL *)url
                           HTTPMethod:(NSString *)method
-                          parameters:(NSDictionary<NSString*, NSString*>*)parameters
+                          parameters:(NSDictionary<NSString*, NSString*>* _Nullable)parameters
                    completionHandler:(JSONCompletionHandler)completion
 {
     return [self dataRequestURL:url HTTPMethod:method parameters:parameters completionHandler:^(NSData *data, NSError *error) {
@@ -55,7 +55,7 @@ typedef void (^DataCompletionHandler) (NSData * _Nullable data, NSError * _Nulla
 
 - (NSURLSessionTask *)dataRequestURL:(NSURL *)url
                       HTTPMethod:(NSString *)method
-                      parameters:(NSDictionary<NSString*, NSString*>*)parameters
+                      parameters:(NSDictionary<NSString*, NSString*>* _Nullable)parameters
                completionHandler:(DataCompletionHandler)completion
 {
 //    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://127.0.0.1:3000/api/v1/counters"]];
@@ -86,11 +86,14 @@ typedef void (^DataCompletionHandler) (NSData * _Nullable data, NSError * _Nulla
     __auto_type *request = [[NSMutableURLRequest alloc] initWithURL:url];
     request.HTTPMethod = method;
 
-    NSData *JSONData = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:nil];
-    //    if (JSONData) {
-    //        request.HTTPBody = JSONData;
-    //        [request setValue:JSONContentType forHTTPHeaderField:ContentType];
-    //    }
+    NSLog(@"Dict is null = %d", parameters == NULL);
+    if (parameters != NULL) {
+        NSData *JSONData = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:nil];
+        if (JSONData) {
+            request.HTTPBody = JSONData;
+            [request setValue:JSONContentType forHTTPHeaderField:ContentType];
+        }
+    }
     return [self.client dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error) {
             completion(data, error);

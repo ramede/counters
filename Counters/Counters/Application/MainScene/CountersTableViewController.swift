@@ -11,11 +11,10 @@ protocol CountersTableViewDisplayable: AnyObject {
     func displayLoad(_ isLoading: Bool)
     func displayError()
     func displayCounters(with counters: [Counter])
-    func displayCounterIncrement()
-    func displayCounterDecrement()
     func dismissCounter()
     func displayDeleteActionSheet()
     func displaySummaryInfo()
+    func displayCount(indexPath: IndexPath, count: Int)
 }
 
 class CountersTableViewController: UITableViewController {
@@ -141,9 +140,8 @@ private extension CountersTableViewController {
         tableView.register(CountersTableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(CountersEmptyStateTableViewCell.self, forCellReuseIdentifier: "emptyState")
         tableView.backgroundView = activityIndicator
-        
-        refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
     }
     
     func setupConstraints() {
@@ -250,8 +248,10 @@ extension CountersTableViewController {
             for: indexPath
         ) as? CountersTableViewCell else { return UITableViewCell() }
         
+        cell.delegate = self
         cell.selectedBackgroundView?.isHidden = true
         cell.tintColor = UIColor(named: "AccentColor")
+        cell.countId = filteredCounters[indexPath.row].id
         cell.counterTitle = filteredCounters[indexPath.row].title
         cell.count = filteredCounters[indexPath.row].count
         return cell
@@ -267,6 +267,20 @@ extension CountersTableViewController {
         if !tableView.isEditing { return }
         let hasSelectedData = !tableView.visibleCells.filter({ $0.isSelected}).isEmpty
         setupToolbarAsBatchDeletionMode(hasSelectedData)
+    }
+}
+
+extension CountersTableViewController: CountersTableViewCellDelegate {
+    func didIncrementTapped(cell: CountersTableViewCell, countId: String?) {
+        if let indexPath = tableView.indexPath(for: cell) {
+            interactor.countIncrement(countId: countId, indexPath: indexPath)
+        }
+    }
+    
+    func didDecrementTapped(cell: CountersTableViewCell, countId: String?) {
+        if let indexPath = tableView.indexPath(for: cell) {
+            interactor.countDecrement(countId: countId, indexPath: indexPath)
+        }
     }
 }
 
@@ -294,14 +308,6 @@ extension CountersTableViewController: CountersTableViewDisplayable {
         }
     }
     
-    func displayCounterIncrement() {
-        
-    }
-    
-    func displayCounterDecrement() {
-        
-    }
-    
     func dismissCounter() {
         
     }
@@ -312,5 +318,14 @@ extension CountersTableViewController: CountersTableViewDisplayable {
     
     func displaySummaryInfo() {
         
+    }
+    
+    func displayCount(indexPath: IndexPath, count: Int) {
+        if indexPath.row >= filteredCounters.startIndex && indexPath.row < filteredCounters.endIndex {
+            filteredCounters[indexPath.row].count = count
+            DispatchQueue.main.async() {
+                self.tableView.reloadData()
+            }
+        }
     }
 }

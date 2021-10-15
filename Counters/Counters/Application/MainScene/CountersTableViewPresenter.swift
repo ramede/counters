@@ -14,6 +14,7 @@ protocol CountersTableViewPresentable: AnyObject {
     func presentLoading(_ isLoading: Bool)
     func presentSummaryInfo()
     func presentError()
+    func presentCount(indexPath: IndexPath, count: Int)
 }
 
 final class CountersTableViewPresenter {
@@ -39,5 +40,9 @@ extension CountersTableViewPresenter: CountersTableViewPresentable {
     
     func presentError() {
         
+    }
+    
+    func presentCount(indexPath: IndexPath, count: Int) {
+        viewController?.displayCount(indexPath: indexPath, count: count)
     }
 }

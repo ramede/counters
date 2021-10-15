@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, CountersErrorCode) {
 
 - (NSURLSessionTask *)jsonRequestURL:(NSURL *)url
                           HTTPMethod:(NSString *)method
-                          parameters:(NSDictionary<NSString*, NSString*>*)parameters
+                          parameters:(NSDictionary<NSString*, NSString*>* _Nullable)parameters
                    completionHandler:(JSONCompletionHandler)completion;
 
 - (NSString *)getBaseURL;
