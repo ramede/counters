@@ -15,6 +15,7 @@ protocol CountersTableViewDisplayable: AnyObject {
     func displayDeleteActionSheet()
     func displaySummaryInfo()
     func displayCount(indexPath: IndexPath, count: Int)
+    func dismissDeletedCounters(_ countersIndexes: [IndexPath?])
 }
 
 class CountersTableViewController: UITableViewController {
@@ -24,14 +25,14 @@ class CountersTableViewController: UITableViewController {
     private let activityIndicator = UIActivityIndicatorView()
     private var allCounters: [Counter] = []
     private var filteredCounters: [Counter] = []
-
+    
     private var interactor: CountersTableViewInteractable
-        
+    
     init(interactor: CountersTableViewInteractable) {
-      self.interactor = interactor
-      super.init(nibName: nil, bundle: .main)
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: .main)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -159,19 +160,11 @@ private extension CountersTableViewController {
     }
     
     @objc func deleteTapped() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler:{ (UIAlertAction)in
-            print("## Delete ###########")
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:{ (UIAlertAction)in
-            print("## Cancel ###########")
-        }))
-        
-        present(alert, animated: true, completion: {
-            print("completion block")
-        })
+        let selectedCells = tableView.visibleCells.filter({ $0.isSelected})
+        let countersIndexes = selectedCells.map({ tableView.indexPath(for: $0) })
+        let countersCells = selectedCells.map({ $0 as? CountersTableViewCell })
+        let counterId = countersCells.map({ $0?.countId })
+        interactor.deleteCounters(countersId: counterId, countersIndexes: countersIndexes)
     }
     
     @objc func editTapped() {
@@ -207,13 +200,12 @@ private extension CountersTableViewController {
 extension CountersTableViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     }
-
 }
 
 extension CountersTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchText = searchController.searchBar.text ?? ""
-                
+        
         if searchText.count == 0 {
             filteredCounters = allCounters
             tableView.reloadData()
@@ -273,13 +265,13 @@ extension CountersTableViewController {
 extension CountersTableViewController: CountersTableViewCellDelegate {
     func didIncrementTapped(cell: CountersTableViewCell, countId: String?) {
         if let indexPath = tableView.indexPath(for: cell) {
-            interactor.countIncrement(countId: countId, indexPath: indexPath)
+            interactor.countIncrement(countId: countId, counterIndex: indexPath)
         }
     }
     
     func didDecrementTapped(cell: CountersTableViewCell, countId: String?) {
         if let indexPath = tableView.indexPath(for: cell) {
-            interactor.countDecrement(countId: countId, indexPath: indexPath)
+            interactor.countDecrement(countId: countId, counterIndex: indexPath)
         }
     }
 }
@@ -327,5 +319,14 @@ extension CountersTableViewController: CountersTableViewDisplayable {
                 self.tableView.reloadData()
             }
         }
+    }
+    
+    func dismissDeletedCounters(_ countersIndexes: [IndexPath?]) {
+        let nonNullableIndexes = countersIndexes.compactMap { $0 }
+        let indexesToRemove = IndexSet(nonNullableIndexes.map({ $0.row }))
+        filteredCounters = filteredCounters.enumerated()
+            .filter { !indexesToRemove.contains($0.offset) }
+            .map { $0.element }
+        tableView.deleteRows(at: nonNullableIndexes, with: .fade)
     }
 }

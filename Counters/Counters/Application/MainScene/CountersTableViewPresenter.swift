@@ -12,9 +12,10 @@ protocol CountersTableViewPresentable: AnyObject {
     func presentCounters(with counters: [Counter])
     func presentDeleteActionSheet()
     func presentLoading(_ isLoading: Bool)
+    func presentCount(indexPath: IndexPath, count: Int)
+    func dismissDeletedCounters(_ countersIndex: [IndexPath?])
     func presentSummaryInfo()
     func presentError()
-    func presentCount(indexPath: IndexPath, count: Int)
 }
 
 final class CountersTableViewPresenter {
@@ -27,22 +28,26 @@ extension CountersTableViewPresenter: CountersTableViewPresentable {
     }
     
     func presentDeleteActionSheet() {
-        
+        viewController?.displayDeleteActionSheet()
     }
-    
+
     func presentLoading(_ isLoading: Bool) {
         viewController?.displayLoad(isLoading)
     }
     
+    func presentCount(indexPath: IndexPath, count: Int) {
+        viewController?.displayCount(indexPath: indexPath, count: count)
+    }
+    
+    func dismissDeletedCounters(_ countersIndex: [IndexPath?]) {
+        viewController?.dismissDeletedCounters(countersIndex)
+    }
+
     func presentSummaryInfo() {
         
     }
     
     func presentError() {
         
-    }
-    
-    func presentCount(indexPath: IndexPath, count: Int) {
-        viewController?.displayCount(indexPath: indexPath, count: count)
     }
 }
