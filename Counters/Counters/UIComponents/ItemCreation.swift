@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ItemCreatingDelegate: AnyObject {
+    func itemDidChange(_ value: String)
+}
+
 final class ItemCreation: UIView {
 
     // MARK: - Private Properties
@@ -14,6 +18,9 @@ final class ItemCreation: UIView {
     private var itemTextField = UITextField()
     private var activityView = UIActivityIndicatorView()
 
+    // MARK: - Public Properties
+    weak var delegate: ItemCreatingDelegate?
+    
     // MARK: - Public Properties
     var isLoading: Bool = false {
         didSet {
@@ -76,6 +83,7 @@ private extension ItemCreation {
     func setupItemTextField() {
         itemTextField.translatesAutoresizingMaskIntoConstraints = false
         itemTextField.placeholder = "Cups of coffee"
+        itemTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     func setupActiviyIndicator() {
@@ -113,5 +121,12 @@ private extension ItemCreation {
     func hideActivityIndicator() {
         activityView.stopAnimating()
         itemTextField.isEnabled = true
+    }
+}
+
+private extension ItemCreation {
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        guard let value = textField.text else { return }
+        delegate?.itemDidChange(value)
     }
 }

@@ -21,6 +21,7 @@ final class CreateCounterView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        counterName.delegate = self
         setup()
     }
     
@@ -58,5 +59,12 @@ private extension CreateCounterView {
             counterName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.CounterName.leading)
         ])
         
+    }
+}
+
+extension CreateCounterView: ItemCreatingDelegate {
+    func itemDidChange(_ value: String) {
+        print("## Value ###########")
+        print(value)
     }
 }

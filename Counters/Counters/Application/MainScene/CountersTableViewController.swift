@@ -327,6 +327,8 @@ extension CountersTableViewController: CountersTableViewDisplayable {
         filteredCounters = filteredCounters.enumerated()
             .filter { !indexesToRemove.contains($0.offset) }
             .map { $0.element }
-        tableView.deleteRows(at: nonNullableIndexes, with: .fade)
+        DispatchQueue.main.async() {
+            self.tableView.reloadData()
+        }
     }
 }
